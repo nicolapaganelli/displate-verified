@@ -86,7 +86,7 @@ function App() {
   )
 
   return (
-    <div className="flex min-h-screen w-full flex-col items-center justify-center bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 px-4 py-8 text-slate-50">
+    <div className="flex min-h-screen w-full flex-col items-center justify-start bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 px-4 py-6 text-slate-50">
       <header className="mb-6 flex w-full max-w-xl items-center justify-between">
         <div>
           <h1 className="flex items-center gap-2 text-2xl font-semibold tracking-tight">
@@ -109,7 +109,7 @@ function App() {
         </div>
       </header>
 
-      <main className="flex w-full max-w-xl flex-1 flex-col items-center justify-center gap-4">
+      <main className="flex w-full max-w-xl flex-1 flex-col items-center justify-start gap-4">
         {isLoading && (
           <div className="flex h-80 w-full items-center justify-center rounded-3xl border border-slate-800 bg-slate-900/60 shadow-xl shadow-black/40">
             <p className="text-sm text-slate-400">Loading artists…</p>
@@ -135,7 +135,7 @@ function App() {
 
         {!isLoading && !error && topArtist && (
           <>
-            <div className="relative flex h-[420px] w-full items-center justify-center">
+            <div className="relative flex h-[360px] max-h-[60vh] w-full items-center justify-center md:h-[420px] md:max-h-[65vh]">
               {filteredArtists
                 .slice(activeIndex)
                 .slice(0, 3)
@@ -159,7 +159,7 @@ function App() {
                           zIndex: filteredArtists.length - absoluteIndex,
                         }}
                       >
-                        <div className="grid flex-1 grid-cols-2 grid-rows-2 gap-0.5 bg-slate-950/60">
+                        <div className="grid h-full w-full grid-cols-2 grid-rows-2 gap-0.5 bg-slate-950/60">
                           {artist.images.map((src, imageIndex) => (
                             <div
                               key={`${artist.id}-${imageIndex}`}
@@ -174,48 +174,46 @@ function App() {
                             </div>
                           ))}
                         </div>
-
-                        <footer className="flex items-center justify-between border-t border-slate-800 bg-slate-900/90 px-4 py-3">
-                          <div className="flex flex-col">
-                            <span className="text-xs uppercase tracking-[0.2em] text-slate-500">
-                              Artist
-                            </span>
-                            <span className="text-sm font-medium text-slate-50">
-                              {artist.nick || artist.name}
-                            </span>
-                            <a
-                              href={artist.url}
-                              target="_blank"
-                              rel="noreferrer"
-                              className="mt-0.5 text-xs text-emerald-400 hover:text-emerald-300"
-                            >
-                              View on Displate
-                            </a>
-                          </div>
-                          <div className="flex gap-3">
-                            <button
-                              type="button"
-                              onClick={() => triggerSwipe('left')}
-                              className="flex h-11 w-11 items-center justify-center rounded-full border border-rose-500/50 bg-rose-500/10 text-rose-300 shadow-lg shadow-rose-900/40 transition hover:bg-rose-500/20 hover:text-rose-100"
-                            >
-                              <X className="h-5 w-5" />
-                            </button>
-                            <button
-                              type="button"
-                              onClick={() => triggerSwipe('right')}
-                              className="flex h-11 w-11 items-center justify-center rounded-full border border-emerald-500/50 bg-emerald-500/10 text-emerald-300 shadow-lg shadow-emerald-900/40 transition hover:bg-emerald-500/20 hover:text-emerald-50"
-                            >
-                              <Check className="h-5 w-5" />
-                            </button>
-                          </div>
-                        </footer>
                       </article>
                     </TinderCard>
                   )
                 })}
             </div>
 
-            <p className="mt-2 text-center text-xs text-slate-500">
+            <div className="mt-4 flex w-full max-w-md items-center justify-between gap-4">
+              <div className="flex flex-col">
+                <span className="text-xs uppercase tracking-[0.2em] text-slate-500">Artist</span>
+                <span className="text-sm font-medium text-slate-50">
+                  {topArtist.nick || topArtist.name}
+                </span>
+                <a
+                  href={topArtist.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-0.5 text-xs text-emerald-400 hover:text-emerald-300"
+                >
+                  View on Displate
+                </a>
+              </div>
+              <div className="flex gap-3">
+                <button
+                  type="button"
+                  onClick={() => triggerSwipe('left')}
+                  className="flex h-12 w-12 items-center justify-center rounded-full border border-rose-500/50 bg-rose-500/10 text-rose-300 shadow-lg shadow-rose-900/40 transition hover:bg-rose-500/20 hover:text-rose-100"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => triggerSwipe('right')}
+                  className="flex h-12 w-12 items-center justify-center rounded-full border border-emerald-500/50 bg-emerald-500/10 text-emerald-300 shadow-lg shadow-emerald-900/40 transition hover:bg-emerald-500/20 hover:text-emerald-50"
+                >
+                  <Check className="h-5 w-5" />
+                </button>
+              </div>
+            </div>
+
+            <p className="mt-3 text-center text-xs text-slate-500">
               Swipe right to mark an artist as Verified, or left to skip them. Your decisions are
               stored locally so you won&apos;t see the same artist twice.
             </p>
